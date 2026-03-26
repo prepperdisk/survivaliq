@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SurvivalIQ — Emergency Preparedness Quiz</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <!-- PLAYER SELECT -->
+    <div id="screen-player" class="screen active">
+      <div class="player-container">
+        <div class="player-logo">
+          <span class="logo-icon">🛡️</span>
+          <h1>SurvivalIQ</h1>
+          <p class="player-tagline">Emergency Preparedness Quiz</p>
+        </div>
+        <div id="player-list-section" class="player-section hidden">
+          <h2>Welcome Back</h2>
+          <div id="player-list" class="player-list"></div>
+          <div class="player-divider"><span>or</span></div>
+        </div>
+        <div class="player-section">
+          <h2 id="player-create-heading">Create Your Profile</h2>
+          <div class="player-form">
+            <input type="text" id="player-name-input" class="player-input" placeholder="Enter your name" maxlength="20" autocomplete="off">
+            <button id="btn-create-player" class="btn btn-primary btn-lg">Start Playing</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPLASH / DASHBOARD -->
+    <div id="screen-dashboard" class="screen">
+      <header class="dash-header">
+        <div class="logo">
+          <span class="logo-icon">🛡️</span>
+          <h1>SurvivalIQ</h1>
+        </div>
+        <div class="player-name-bar">
+          <span id="dash-player-name"></span>
+        </div>
+        <div class="user-stats-bar">
+          <div class="stat-pill xp-pill" title="Experience Points">
+            <span class="stat-icon">⚡</span>
+            <span id="dash-xp">0</span> XP
+          </div>
+          <div class="stat-pill streak-pill" title="Daily Streak">
+            <span class="stat-icon">🔥</span>
+            <span id="dash-streak">0</span>
+          </div>
+          <div class="stat-pill level-pill" title="Level">
+            <span class="stat-icon">🎖️</span>
+            Lv <span id="dash-level">1</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="overall-progress-section">
+        <h2>Your Progress</h2>
+        <div class="overall-bar-container">
+          <div class="overall-bar">
+            <div id="overall-bar-fill" class="overall-bar-fill" style="width:0%"></div>
+          </div>
+          <span id="overall-bar-label" class="overall-bar-label">0 / 250 mastered</span>
+        </div>
+      </div>
+
+      <div class="category-grid" id="category-grid"></div>
+
+      <div class="dash-actions">
+        <button id="btn-start-quiz" class="btn btn-primary btn-lg pulse">
+          Start Quiz <span class="btn-sub">20 Questions</span>
+        </button>
+        <button id="btn-start-weak" class="btn btn-secondary btn-lg">
+          Practice Weak Areas <span class="btn-sub">Focus on mistakes</span>
+        </button>
+        <div class="dash-bottom-actions">
+          <button id="btn-switch-player" class="btn btn-ghost btn-sm">Switch Player</button>
+          <button id="btn-reset" class="btn btn-ghost btn-sm">Reset Progress</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUIZ SCREEN -->
+    <div id="screen-quiz" class="screen">
+      <div class="quiz-topbar">
+        <button id="btn-quit" class="btn btn-ghost btn-sm">✕ Quit</button>
+        <div class="quiz-progress">
+          <div class="quiz-progress-bar">
+            <div id="quiz-progress-fill" class="quiz-progress-fill"></div>
+          </div>
+          <span id="quiz-progress-label">1 / 20</span>
+        </div>
+        <div class="quiz-score-live">
+          <span id="quiz-correct-count">0</span> ✓
+        </div>
+      </div>
+
+      <div class="quiz-body">
+        <div class="category-badge" id="quiz-category-badge"></div>
+        <h2 class="question-text" id="quiz-question"></h2>
+        <div id="quiz-media" class="quiz-media hidden"></div>
+        <div class="options-list" id="quiz-options"></div>
+        <div class="explanation-box hidden" id="quiz-explanation">
+          <div class="explanation-header" id="explanation-header"></div>
+          <p id="explanation-text"></p>
+          <p class="explanation-source" id="explanation-source"></p>
+        </div>
+        <button id="btn-next" class="btn btn-primary btn-lg hidden">Next →</button>
+      </div>
+    </div>
+
+    <!-- RESULTS SCREEN -->
+    <div id="screen-results" class="screen">
+      <div class="results-container">
+        <div class="results-hero" id="results-hero">
+          <div class="results-emoji" id="results-emoji">🎯</div>
+          <h2 id="results-title">Great Job!</h2>
+          <p id="results-subtitle"></p>
+        </div>
+
+        <div class="results-stats-grid">
+          <div class="result-stat">
+            <div class="result-stat-value" id="res-correct">0</div>
+            <div class="result-stat-label">Correct</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-stat-value" id="res-total">20</div>
+            <div class="result-stat-label">Questions</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-stat-value" id="res-xp">0</div>
+            <div class="result-stat-label">XP Earned</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-stat-value" id="res-new-mastered">0</div>
+            <div class="result-stat-label">Newly Mastered</div>
+          </div>
+        </div>
+
+        <div class="results-review" id="results-review">
+          <h3>Review Incorrect Answers</h3>
+          <div id="review-list"></div>
+        </div>
+
+        <div class="results-actions">
+          <button id="btn-back-dash" class="btn btn-primary btn-lg">Back to Dashboard</button>
+          <button id="btn-play-again" class="btn btn-secondary btn-lg">Play Again</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <div id="confetti-container"></div>
+
+  <!-- Hidden cheat menu (Ctrl+Shift+G) -->
+  <div id="cheat-overlay" class="cheat-overlay hidden">
+    <div class="cheat-modal">
+      <h3>Go to Question</h3>
+      <div class="cheat-input-row">
+        <input type="number" id="cheat-id-input" placeholder="Question ID (1-252)" min="1" max="999">
+        <button id="cheat-go" class="btn btn-primary btn-sm">Go</button>
+      </div>
+      <p class="cheat-hint">Ctrl+Shift+G to toggle &middot; Esc to close</p>
+      <button id="cheat-close" class="btn btn-ghost btn-sm">Close</button>
+    </div>
+  </div>
+
+  <script src="js/questions.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
