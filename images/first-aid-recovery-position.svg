@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" fill="none">
+  <rect width="600" height="300" rx="12" fill="#FFF0F0"/>
+  <text x="300" y="30" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="bold" fill="#CC0000">Recovery Position</text>
+  <!-- Body outline -->
+  <ellipse cx="260" cy="140" rx="30" ry="25" fill="#FFCCAA" stroke="#333" stroke-width="2"/>
+  <!-- Torso on side -->
+  <path d="M240 160 Q220 200 230 260" stroke="#333" stroke-width="3" fill="none"/>
+  <path d="M280 160 Q300 200 290 260" stroke="#333" stroke-width="3" fill="none"/>
+  <rect x="225" y="155" width="70" height="90" rx="10" fill="#4A90D9" stroke="#333" stroke-width="2"/>
+  <!-- Upper arm bent supporting head -->
+  <path d="M230 170 L190 140 L200 120" stroke="#FFCCAA" stroke-width="8" stroke-linecap="round"/>
+  <!-- Lower arm extended -->
+  <path d="M290 190 L340 210" stroke="#FFCCAA" stroke-width="8" stroke-linecap="round"/>
+  <!-- Upper leg bent -->
+  <path d="M250 245 L210 280 L230 290" stroke="#4A90D9" stroke-width="8" stroke-linecap="round"/>
+  <!-- Lower leg straight -->
+  <path d="M270 245 L310 280 L350 280" stroke="#4A90D9" stroke-width="8" stroke-linecap="round"/>
+  <!-- Labels -->
+  <text x="140" y="115" font-family="Arial,sans-serif" font-size="12" fill="#333">Hand under cheek</text>
+  <line x1="185" y1="118" x2="198" y2="125" stroke="#333" stroke-width="1"/>
+  <text x="340" y="200" font-family="Arial,sans-serif" font-size="12" fill="#333">Arm extended</text>
+  <line x1="335" y1="205" x2="320" y2="210" stroke="#333" stroke-width="1"/>
+  <text x="140" y="290" font-family="Arial,sans-serif" font-size="12" fill="#333">Top knee bent at 90°</text>
+  <line x1="210" y1="285" x2="220" y2="285" stroke="#333" stroke-width="1"/>
+  <text x="380" y="275" font-family="Arial,sans-serif" font-size="12" fill="#333">Bottom leg straight</text>
+  <line x1="375" y1="278" x2="350" y2="280" stroke="#333" stroke-width="1"/>
+</svg>
