@@ -10,6 +10,42 @@
   const ACTIVE_KEY = 'survivaliq_active';
   const LETTERS = ['A', 'B', 'C', 'D', 'E'];
 
+  // ── Sound effects (Web Audio API — no files needed) ──
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+  function playCorrectSound() {
+    const t = audioCtx.currentTime;
+    const g = audioCtx.createGain();
+    g.connect(audioCtx.destination);
+    g.gain.setValueAtTime(0.25, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
+    // two-tone rising chime
+    [520, 780].forEach((freq, i) => {
+      const o = audioCtx.createOscillator();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(freq, t + i * 0.12);
+      o.connect(g);
+      o.start(t + i * 0.12);
+      o.stop(t + 0.4);
+    });
+  }
+
+  function playIncorrectSound() {
+    const t = audioCtx.currentTime;
+    const g = audioCtx.createGain();
+    g.connect(audioCtx.destination);
+    g.gain.setValueAtTime(0.2, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.35);
+    // low descending buzz
+    const o = audioCtx.createOscillator();
+    o.type = 'square';
+    o.frequency.setValueAtTime(200, t);
+    o.frequency.linearRampToValueAtTime(120, t + 0.3);
+    o.connect(g);
+    o.start(t);
+    o.stop(t + 0.35);
+  }
+
   const CATEGORIES = {
     'first-aid':   { name: 'First Aid',              icon: '🏥', color: 'var(--cat-first-aid)' },
     'shelter':     { name: 'Shelter',                 icon: '⛺', color: 'var(--cat-shelter)' },
@@ -355,6 +391,8 @@
     });
 
     quizState.answers.push({ questionId: q.id, selectedIndex, correct });
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    correct ? playCorrectSound() : playIncorrectSound();
 
     if (correct) {
       quizState.correctCount++;
