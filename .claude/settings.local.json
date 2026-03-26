@@ -10,7 +10,18 @@
       "Bash(git commit:*)",
       "Bash(git remote:*)",
       "Bash(git push:*)",
-      "Bash(gh auth:*)"
+      "Bash(gh auth:*)",
+      "Bash(curl -sL -o first-aid-cpr.png \"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Recovery_position.svg/512px-Recovery_position.svg.png\")",
+      "Bash(curl -sL -o water-solar-still.png \"https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Solar_still_diagram.svg/512px-Solar_still_diagram.svg.png\")",
+      "Bash(curl -sL -o shelter-debris-hut.jpg \"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Debris_shelter.jpg/512px-Debris_shelter.jpg\")",
+      "Bash(curl -sL -o navigation-compass.jpg \"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Compass_align.jpg/512px-Compass_align.jpg\")",
+      "Bash(curl -sL -o comms-noaa-radio.jpg \"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NOAA_Weather_Radio.jpg/512px-NOAA_Weather_Radio.jpg\")",
+      "Bash(curl -sL -o rescue-ground-signal.svg \"https://upload.wikimedia.org/wikipedia/commons/3/3a/Ground-to-air_signals.svg\")",
+      "Bash(curl -sL -o food-myplate.png \"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/USDA_MyPlate_green.svg/512px-USDA_MyPlate_green.svg.png\")",
+      "Bash(file /Users/adamchace/dev/content/survivaliq/images/*)",
+      "Bash(curl -sL -o first-aid-cpr.png \"https://upload.wikimedia.org/wikipedia/commons/8/8a/Recovery_position.svg\" -H \"User-Agent: Mozilla/5.0\")",
+      "Bash(curl -sL -o water-solar-still.svg \"https://upload.wikimedia.org/wikipedia/commons/4/41/Solar_still_diagram.svg\" -H \"User-Agent: Mozilla/5.0\")",
+      "Bash(curl -v -L -o test.png \"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Recovery_position.svg/512px-Recovery_position.svg.png\" -H \"User-Agent: Mozilla/5.0 \\(Macintosh; Intel Mac OS X 10_15_7\\)\")"
     ]
   }
 }
