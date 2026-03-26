@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" fill="none">
+  <rect width="600" height="320" rx="12" fill="#FFF8F0"/>
+  <text x="300" y="30" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="bold" fill="#CC6600">Emergency Food Supply — 72 Hours</text>
+  <!-- Shelf/container -->
+  <rect x="40" y="50" width="520" height="230" rx="10" fill="#FFF" stroke="#DDD" stroke-width="2"/>
+  <!-- Can 1 -->
+  <rect x="70" y="80" width="60" height="80" rx="5" fill="#E8E8E8" stroke="#999" stroke-width="1.5"/>
+  <ellipse cx="100" cy="80" rx="30" ry="6" fill="#D0D0D0" stroke="#999" stroke-width="1"/>
+  <text x="100" y="120" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#333">Canned</text>
+  <text x="100" y="133" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#333">Meat</text>
+  <!-- Box 2 -->
+  <rect x="160" y="90" width="70" height="70" rx="3" fill="#FFE4B5" stroke="#999" stroke-width="1.5"/>
+  <text x="195" y="125" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#333">Crackers</text>
+  <text x="195" y="138" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#333">&amp; Cereal</text>
+  <!-- Jar 3 -->
+  <rect x="260" y="85" width="55" height="75" rx="5" fill="#DEB887" stroke="#999" stroke-width="1.5"/>
+  <rect x="268" y="78" width="40" height="12" rx="2" fill="#8B4513"/>
+  <text x="287" y="125" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#333">Peanut</text>
+  <text x="287" y="138" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#333">Butter</text>
+  <!-- Bag 4 -->
+  <rect x="340" y="90" width="65" height="70" rx="3" fill="#FFDAB9" stroke="#999" stroke-width="1.5"/>
+  <text x="372" y="125" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#333">Dried</text>
+  <text x="372" y="138" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#333">Fruit</text>
+  <!-- Bottle 5 -->
+  <rect x="435" y="75" width="45" height="85" rx="8" fill="#87CEEB" stroke="#999" stroke-width="1.5"/>
+  <rect x="445" y="65" width="25" height="15" rx="3" fill="#4A90D9"/>
+  <text x="457" y="120" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#333">Water</text>
+  <text x="457" y="133" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#333">1 gal/</text>
+  <text x="457" y="146" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#333">day</text>
+  <!-- Tips -->
+  <text x="80" y="200" font-family="Arial,sans-serif" font-size="12" fill="#333">✓ No cooking required    ✓ High calorie    ✓ Long shelf life</text>
+  <text x="80" y="222" font-family="Arial,sans-serif" font-size="12" fill="#333">✓ Non-perishable          ✓ Compact           ✓ 2,000 cal/person/day</text>
+  <text x="80" y="258" font-family="Arial,sans-serif" font-size="11" fill="#999">Store in cool, dry place. Rotate every 6-12 months.</text>
+  <text x="300" y="305" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" fill="#666">Source: Ready.gov / FEMA — Build A Kit</text>
+</svg>

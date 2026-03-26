@@ -31,7 +31,8 @@
   --cat-water: #1CB0F6;
   --cat-food: #FF9600;
   --cat-comms: #FFD900;
-  --cat-family: #58CC02;
+  --cat-navigation: #58CC02;
+  --cat-rescue: #FF6B6B;
 }
 
 html { font-size: 16px; }

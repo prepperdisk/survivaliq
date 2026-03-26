@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 350" fill="none">
+  <rect width="600" height="350" rx="12" fill="#FFF5EE"/>
+  <text x="300" y="30" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="bold" fill="#CC4400">Ground-to-Air Emergency Signals</text>
+  <!-- Signal 1: V = Need Assistance -->
+  <g transform="translate(80,60)">
+    <text x="50" y="0" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="bold" fill="#333">V</text>
+    <line x1="20" y1="20" x2="50" y2="80" stroke="#CC4400" stroke-width="8" stroke-linecap="round"/>
+    <line x1="80" y1="20" x2="50" y2="80" stroke="#CC4400" stroke-width="8" stroke-linecap="round"/>
+    <text x="50" y="105" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" fill="#333">Need</text>
+    <text x="50" y="118" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" fill="#333">Assistance</text>
+  </g>
+  <!-- Signal 2: X = Need Medical -->
+  <g transform="translate(220,60)">
+    <text x="50" y="0" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="bold" fill="#333">X</text>
+    <line x1="20" y1="20" x2="80" y2="80" stroke="#CC4400" stroke-width="8" stroke-linecap="round"/>
+    <line x1="80" y1="20" x2="20" y2="80" stroke="#CC4400" stroke-width="8" stroke-linecap="round"/>
+    <text x="50" y="105" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" fill="#333">Need Medical</text>
+    <text x="50" y="118" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" fill="#333">Help</text>
+  </g>
+  <!-- Signal 3: I = Need Supplies -->
+  <g transform="translate(360,60)">
+    <text x="50" y="0" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="bold" fill="#333">I</text>
+    <line x1="50" y1="20" x2="50" y2="80" stroke="#CC4400" stroke-width="8" stroke-linecap="round"/>
+    <text x="50" y="105" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" fill="#333">Need</text>
+    <text x="50" y="118" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" fill="#333">Supplies</text>
+  </g>
+  <!-- Signal 4: Arrow = Traveling this direction -->
+  <g transform="translate(80,195)">
+    <text x="50" y="0" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="bold" fill="#333">→</text>
+    <line x1="20" y1="50" x2="80" y2="50" stroke="#CC4400" stroke-width="8" stroke-linecap="round"/>
+    <polygon points="80,35 100,50 80,65" fill="#CC4400"/>
+    <text x="50" y="90" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" fill="#333">Traveling</text>
+    <text x="50" y="103" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" fill="#333">This Direction</text>
+  </g>
+  <!-- Signal 5: LL = All Well -->
+  <g transform="translate(220,195)">
+    <text x="50" y="0" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="bold" fill="#333">LL</text>
+    <line x1="30" y1="20" x2="30" y2="70" stroke="#CC4400" stroke-width="8" stroke-linecap="round"/>
+    <line x1="30" y1="70" x2="60" y2="70" stroke="#CC4400" stroke-width="8" stroke-linecap="round"/>
+    <line x1="70" y1="20" x2="70" y2="70" stroke="#CC4400" stroke-width="8" stroke-linecap="round"/>
+    <line x1="70" y1="70" x2="100" y2="70" stroke="#CC4400" stroke-width="8" stroke-linecap="round"/>
+    <text x="60" y="95" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" fill="#333">All Well</text>
+  </g>
+  <text x="300" y="340" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" fill="#666">Source: U.S. Air Force Survival Manual (AF 64-4)</text>
+</svg>

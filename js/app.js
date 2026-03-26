@@ -11,12 +11,13 @@
   const LETTERS = ['A', 'B', 'C', 'D', 'E'];
 
   const CATEGORIES = {
-    'first-aid':  { name: 'First Aid',              icon: '🏥', color: 'var(--cat-first-aid)' },
-    'shelter':    { name: 'Survival Shelters',       icon: '⛺', color: 'var(--cat-shelter)' },
-    'water':      { name: 'Water Safety',            icon: '💧', color: 'var(--cat-water)' },
-    'food':       { name: 'Food & Nutrition',        icon: '🥫', color: 'var(--cat-food)' },
-    'comms':      { name: 'Emergency Comms',         icon: '📡', color: 'var(--cat-comms)' },
-    'family':     { name: 'Family & Pet Safety',     icon: '👨‍👩‍👧‍👦', color: 'var(--cat-family)' },
+    'first-aid':   { name: 'First Aid',              icon: '🏥', color: 'var(--cat-first-aid)' },
+    'shelter':     { name: 'Shelter',                 icon: '⛺', color: 'var(--cat-shelter)' },
+    'water':       { name: 'Water',                   icon: '💧', color: 'var(--cat-water)' },
+    'food':        { name: 'Food & Nutrition',        icon: '🥫', color: 'var(--cat-food)' },
+    'comms':       { name: 'Emergency Comms',         icon: '📡', color: 'var(--cat-comms)' },
+    'navigation':  { name: 'Navigation',              icon: '🧭', color: 'var(--cat-navigation)' },
+    'rescue':      { name: 'Rescue',                  icon: '🚁', color: 'var(--cat-rescue)' },
   };
 
   // ── State ──
