@@ -1,0 +1,258 @@
+{
+  "$schema": "prepper-disk-scenarios-v1",
+  "version": "1.0.0",
+  "scenarios": [
+    {
+      "id": "scenario_001",
+      "meta": {
+        "title": "The Day Hike That Wasn't",
+        "category": "wilderness_survival",
+        "tags": ["cold_weather", "navigation", "shelter", "signaling", "fire"],
+        "difficulty": "intermediate",
+        "setting": "New England forest, late October",
+        "estimated_minutes": 10,
+        "season": "fall",
+        "environment": "woodland"
+      },
+      "intro": {
+        "narrative": "It's late October in central New England. You drove alone to a trailhead for what was supposed to be a 4-hour out-and-back. You told no one where you were going.\n\nIt's now 4:30 PM. You've been hiking since 10 AM and took a wrong fork somewhere. You don't recognize anything around you. The temperature was 52°F when you started — it's dropping fast and the sky is going gray. Sunset is around 5:15 PM.",
+        "gear": [
+          "Day pack",
+          "Half-eaten granola bar and an apple",
+          "1/3 full 32oz water bottle",
+          "Light fleece jacket",
+          "Phone at 47% battery, no signal",
+          "Car keys",
+          "Lighter (forgotten in pocket)"
+        ],
+        "threat_summary": "Cold exposure, darkness, no one knows your location"
+      },
+      "decision_points": [
+        {
+          "id": "dp_001",
+          "sequence": 1,
+          "situation": "You realize you're lost. It's 4:30 PM, you have less than an hour of daylight, and you're not sure which direction leads back to the trailhead. What's your first move?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Keep moving — try to find a trail, road, or high ground before dark",
+              "grade": "C",
+              "correct": false,
+              "consequence": "Moving without a plan in unfamiliar terrain burns energy and daylight. You could deepen your lostness.",
+              "teaching_point": "Random movement is one of the most dangerous things a lost person can do. Stop, breathe, assess."
+            },
+            {
+              "id": "B",
+              "text": "Stop now, find a defensible spot, and start preparing for an overnight",
+              "grade": "A",
+              "correct": true,
+              "consequence": "You preserve daylight for shelter building and make yourself easier to find by staying put. This is the survival-trained response.",
+              "teaching_point": "The rule is STOP: Stop, Think, Observe, Plan. Staying put is almost always the right call when lost."
+            },
+            {
+              "id": "C",
+              "text": "Try to climb the nearest high point to get your bearings and maybe cell signal",
+              "grade": "C+",
+              "correct": false,
+              "consequence": "It takes 25 minutes of hard scrambling to reach the top. You're now sweaty, exposed, and it's nearly dark. No signal.",
+              "teaching_point": "High ground for signal is a reasonable instinct, but it burns irreplaceable daylight and leaves you exposed at dusk."
+            },
+            {
+              "id": "D",
+              "text": "Follow the nearest stream or drainage downhill",
+              "grade": "B-",
+              "correct": false,
+              "consequence": "Streams do often lead to civilization, but in dense New England forest this can take hours and lead through brutal terrain in the dark.",
+              "teaching_point": "Following water out is a valid long-term strategy, but not the right first move when you still have daylight to prep shelter."
+            }
+          ]
+        },
+        {
+          "id": "dp_002",
+          "sequence": 2,
+          "situation": "You're exposed on the high point, damp from exertion, wind cutting through your fleece. It's 4:55 PM. You spotted a stream drainage in the valley below and a dense stand of conifers about 150 feet downslope. You have maybe 20 minutes of usable daylight. What do you prioritize?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Descend fast toward that stream drainage — water is your most important resource",
+              "grade": "C",
+              "correct": false,
+              "consequence": "You reach the stream in the dark. Your water bottle wasn't the crisis. You've burned your daylight on a resource you didn't urgently need.",
+              "teaching_point": "In cold weather survival, priority order is: warmth, shelter, water, food. Most people invert this because thirst feels urgent and cold feels manageable — until it isn't."
+            },
+            {
+              "id": "B",
+              "text": "Get down into those conifers and start building shelter before it's fully dark",
+              "grade": "A",
+              "correct": true,
+              "consequence": "You reach the hemlocks with 15 minutes of gray light to spare and start working immediately. You're cold but in control.",
+              "teaching_point": "Shelter before water, always, in cold exposure scenarios. The conifers block wind and provide building material."
+            },
+            {
+              "id": "C",
+              "text": "Use your lighter to start a signal fire up here on the rocks while you still have visibility",
+              "grade": "D",
+              "correct": false,
+              "consequence": "You're above treeline with no fuel. The lighter produces nothing useful and you've wasted precious minutes.",
+              "teaching_point": "Signal fires require fuel. Rock outcrops have none. Never attempt a fire without confirming you have the materials to sustain it."
+            },
+            {
+              "id": "D",
+              "text": "Stay put, conserve energy, and use your phone flashlight to signal through the night",
+              "grade": "D+",
+              "correct": false,
+              "consequence": "You survive the night exposed with no shelter, burning battery on a flashlight nobody is looking for yet. Hypothermia risk is high.",
+              "teaching_point": "Phone light signaling only works if someone is actively searching. On night one, before anyone knows you're missing, it's just battery drain."
+            }
+          ]
+        },
+        {
+          "id": "dp_003",
+          "sequence": 3,
+          "situation": "You're under the hemlocks in the dark. Hands getting clumsy — early sign of heat loss. Temp is probably high 30s. You have your lighter. What do you do first?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Gather wood and get a fire going immediately — warmth is critical",
+              "grade": "B-",
+              "correct": false,
+              "consequence": "Fire helps, but without shelter you're radiating heat into open air all night. Fire alone won't keep you warm in these conditions.",
+              "teaching_point": "A fire with no shelter is inefficient. Shelter retains body heat even with no fire at all. Do both, but shelter first."
+            },
+            {
+              "id": "B",
+              "text": "Build a debris shelter first, then worry about fire",
+              "grade": "A",
+              "correct": true,
+              "consequence": "You spend 40 minutes building a hemlock debris shelter. It's rough but wind-blocking. Your core temp stabilizes from the exertion. Then you build fire.",
+              "teaching_point": "Ground insulation is the most critical element — the earth steals heat faster than cold air. Boughs underneath you first, always."
+            },
+            {
+              "id": "C",
+              "text": "Drink some water, eat your granola bar, then build a fire",
+              "grade": "C+",
+              "correct": false,
+              "consequence": "Calories help, but the time cost of eating first when your hands are already getting clumsy is dangerous. Heat loss is accelerating.",
+              "teaching_point": "Food and water matter, but not when you're actively losing core temperature. Shelter and warmth always outrank nutrition in acute cold exposure."
+            },
+            {
+              "id": "D",
+              "text": "Layer up with everything you have and build fire at the same time",
+              "grade": "B",
+              "correct": false,
+              "consequence": "Multitasking works, but clumsy hands make fire-starting harder and slower. You end up with a mediocre shelter and a mediocre fire.",
+              "teaching_point": "Sequencing matters. Do one thing well rather than two things poorly when resources and time are scarce."
+            }
+          ]
+        },
+        {
+          "id": "dp_004",
+          "sequence": 4,
+          "situation": "You need fire. You have a lighter but it's dark and you didn't pre-collect tinder while you could still see. How do you approach getting a fire started?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Dig into the duff and dead leaves at the base of the hemlocks — dry tinder is usually just below the surface",
+              "grade": "B",
+              "correct": false,
+              "consequence": "You find some dry material but it's inconsistent and takes many attempts to catch. The lighter gets warm from repeated use.",
+              "teaching_point": "Duff can work but is unreliable. It often contains moisture and doesn't shred into the fine fibers that catch a spark reliably."
+            },
+            {
+              "id": "B",
+              "text": "Strip the dry inner bark from a dead standing branch — it shreds into fine fibers",
+              "grade": "B+",
+              "correct": false,
+              "consequence": "Good natural tinder. It takes a few minutes to prepare but catches well. Fire is going within 10 minutes.",
+              "teaching_point": "Dead standing wood is always drier than ground wood. Inner bark of many species shreds into excellent natural tinder."
+            },
+            {
+              "id": "C",
+              "text": "Check your pockets and pack for anything man-made that burns well as a starter",
+              "grade": "B+",
+              "correct": false,
+              "consequence": "You find a granola bar wrapper, a receipt, and cardboard from a pack tag. Good accelerants but burn fast — you need natural tinder underneath.",
+              "teaching_point": "Man-made materials are excellent fire starters but burn too quickly to sustain. They need natural tinder underneath to bridge to real fuel."
+            },
+            {
+              "id": "D",
+              "text": "Both B and C — layer man-made tinder with natural fiber for the best chance of a catch",
+              "grade": "A",
+              "correct": true,
+              "consequence": "Cardboard base, bark fiber nest, wrapper in the center. First flick catches. Fire is sustainable within 15 minutes.",
+              "teaching_point": "Layering tinder types — man-made accelerant over natural fiber over coarse material — maximizes catch probability and minimizes lighter use."
+            }
+          ]
+        },
+        {
+          "id": "dp_005",
+          "sequence": 5,
+          "situation": "It's around 8 PM. You're stable — fire going, rough shelter built. Battery at 26%, still no signal. What's your overnight strategy?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Conserve battery completely — no phone use until morning when you'll move toward the stream and follow it out",
+              "grade": "B-",
+              "correct": false,
+              "consequence": "Safe but passive. Nobody knows where you are. If weather turns or you're injured tomorrow, you have no communication attempt logged.",
+              "teaching_point": "Battery conservation matters, but a text costs almost nothing and has enormous upside. Passive survival is a last resort, not a first choice."
+            },
+            {
+              "id": "B",
+              "text": "Send your GPS coordinates as a text to someone — texts sometimes push through even without a full signal bar",
+              "grade": "A",
+              "correct": true,
+              "consequence": "The message queues, sits for 90 seconds, then shows a single checkmark. It went out. You enable airplane mode to conserve battery and set a 90-minute sleep alarm.",
+              "teaching_point": "SMS uses a lower-bandwidth channel than voice or data and can push through on weak signal. It's a low-cost, high-upside move that most people don't know to try."
+            },
+            {
+              "id": "C",
+              "text": "Set a 90-minute sleep alarm, tend the fire, sleep in cycles through the night",
+              "grade": "B+",
+              "correct": false,
+              "consequence": "Smart fire management and rest cycling are solid survival technique. But you've missed the communication opportunity.",
+              "teaching_point": "Sleep cycling to maintain a fire is legitimate survival strategy — 90 minutes aligns with a full sleep cycle. But pair it with a communication attempt first."
+            },
+            {
+              "id": "D",
+              "text": "Keep the phone flashlight on low all night so rescuers might spot it from above",
+              "grade": "D",
+              "correct": false,
+              "consequence": "Phone dies by 2 AM. No one is searching yet — you're not officially missing until morning at the earliest. The fire is a far better signal.",
+              "teaching_point": "Flashlight signaling only works when someone is looking. Your fire is visible for miles. Your phone light is visible for hundreds of feet. Use the right tool."
+            }
+          ]
+        }
+      ],
+      "debrief": {
+        "title": "Scenario Debrief",
+        "core_lesson": "In cold-weather survival, the priority order is warmth first, shelter second, water third, food last. Most people invert this because thirst feels urgent and cold feels manageable — until it isn't.",
+        "key_skills_tested": [
+          "Survival priority order (STOP principle)",
+          "Cold weather threat assessment",
+          "Shelter construction fundamentals",
+          "Fire-starting technique",
+          "Emergency communication"
+        ],
+        "grade_thresholds": {
+          "A": { "min_score": 90, "label": "Expert Survivor", "description": "You think like someone trained for this. Your instincts are calibrated and your decisions were sequenced correctly." },
+          "B": { "min_score": 75, "label": "Capable Survivor", "description": "Solid instincts with a few costly mistakes. You made it through but left margins on the table." },
+          "C": { "min_score": 60, "label": "Struggling Survivor", "description": "You survived, but more by luck than design. Some fundamental priorities need recalibration." },
+          "D": { "min_score": 0, "label": "At Risk", "description": "Critical knowledge gaps in cold-weather survival. Study the debrief carefully — these mistakes are life-threatening in real conditions." }
+        },
+        "option_grade_weights": {
+          "A": 100,
+          "B": 80,
+          "B+": 85,
+          "B-": 72,
+          "C+": 65,
+          "C": 60,
+          "C-": 55,
+          "D+": 45,
+          "D": 30,
+          "F": 0
+        }
+      }
+    }
+  ]
+}

@@ -569,10 +569,226 @@ body {
   gap: 12px;
 }
 
+/* ===== SCENARIO BUTTON ===== */
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 0 #cc7700;
+}
+.btn-accent:hover { background: #e68800; transform: translateY(-1px); }
+.btn-accent:active { transform: translateY(2px); box-shadow: 0 1px 0 #cc7700; }
+
+/* ===== SCENARIO PICKER ===== */
+.scenario-picker-topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  border-bottom: 2px solid var(--border);
+}
+.scenario-picker-topbar h2 { font-size: 1.2rem; }
+
+.scenario-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  padding: 24px;
+}
+
+.scenario-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  transition: all var(--transition);
+}
+.scenario-card:hover { border-color: var(--text-muted); background: var(--bg-card-hover); }
+
+.scenario-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+.scenario-card-header h3 { font-size: 1.05rem; }
+.scenario-difficulty { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; }
+
+.scenario-card-meta { display: flex; gap: 16px; font-size: 0.85rem; color: var(--text-dim); margin-bottom: 10px; }
+
+.scenario-card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.scenario-tag {
+  padding: 3px 10px;
+  background: var(--surface);
+  border-radius: 100px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.scenario-card-footer { display: flex; justify-content: space-between; align-items: center; }
+.scenario-best-grade { font-size: 0.9rem; color: var(--primary); font-weight: 700; }
+.scenario-new { font-size: 0.8rem; color: var(--accent); font-weight: 700; text-transform: uppercase; }
+
+/* ===== SCENARIO PLAYER ===== */
+.scenario-topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 24px;
+  background: var(--bg-card);
+  border-bottom: 2px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.scenario-progress { flex: 1; display: flex; align-items: center; gap: 10px; }
+.scenario-progress-bar {
+  flex: 1; height: 14px;
+  background: var(--surface);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.scenario-body {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 32px 24px 40px;
+}
+
+.scenario-title { font-size: 1.5rem; font-weight: 900; margin-bottom: 20px; }
+.scenario-narrative p { color: var(--text-dim); line-height: 1.7; margin-bottom: 14px; font-size: 1.05rem; }
+
+.scenario-gear {
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 20px 0;
+}
+.scenario-gear h3 { font-size: 0.9rem; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; }
+.scenario-gear ul { list-style: none; }
+.scenario-gear li { padding: 6px 0; color: var(--text); font-size: 0.95rem; border-bottom: 1px solid var(--border); }
+.scenario-gear li::before { content: '• '; color: var(--accent); font-weight: 700; }
+.scenario-gear li:last-child { border-bottom: none; }
+
+.scenario-threat {
+  background: rgba(255, 75, 75, 0.1);
+  border-left: 4px solid var(--danger);
+  padding: 14px 18px;
+  border-radius: var(--radius-xs);
+  margin-bottom: 24px;
+  color: var(--text-dim);
+}
+
+.scenario-dp-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+.scenario-situation {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+/* Consequence / feedback */
+.scenario-grade-badge {
+  display: inline-block;
+  padding: 8px 20px;
+  border: 3px solid;
+  border-radius: var(--radius);
+  font-size: 1.2rem;
+  font-weight: 900;
+  margin-bottom: 20px;
+}
+.scenario-consequence-text,
+.scenario-teaching,
+.scenario-best-answer {
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 14px;
+  border: 2px solid var(--border);
+}
+.scenario-consequence-text h3,
+.scenario-teaching h3,
+.scenario-best-answer h3 {
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.scenario-consequence-text p,
+.scenario-teaching p,
+.scenario-best-answer p {
+  color: var(--text);
+  line-height: 1.6;
+}
+.scenario-best-answer { border-left: 4px solid var(--primary); }
+
+/* Consequence bridge narrative */
+.scenario-bridge {
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 20px;
+  border-left: 4px solid var(--accent);
+  color: var(--text-dim);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* ===== SCENARIO DEBRIEF ===== */
+.scenario-final-grade {
+  font-size: 4rem;
+  font-weight: 900;
+  text-align: center;
+}
+.scenario-score-label {
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+.scenario-improved {
+  text-align: center;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.scenario-grade-box { margin-bottom: 28px; }
+
+.scenario-core-lesson,
+.scenario-skills,
+.scenario-review {
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.scenario-core-lesson h3,
+.scenario-skills h3,
+.scenario-review h3 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+.scenario-core-lesson p { color: var(--text-dim); line-height: 1.6; }
+.scenario-skills ul { list-style: none; }
+.scenario-skills li {
+  padding: 6px 0;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+.scenario-skills li::before { content: '✓ '; color: var(--primary); font-weight: 700; }
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 600px) {
   .dash-header { flex-direction: column; align-items: flex-start; }
   .category-grid { grid-template-columns: 1fr; }
+  .scenario-list { grid-template-columns: 1fr; }
   .results-stats-grid { grid-template-columns: repeat(2, 1fr); }
   .question-text { font-size: 1.1rem; }
   .btn-lg { padding: 14px 28px; font-size: 1rem; }

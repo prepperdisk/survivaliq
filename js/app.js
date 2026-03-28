@@ -46,6 +46,39 @@
     o.stop(t + 0.35);
   }
 
+  // Scenario-specific sounds — subtler than quiz sounds
+  function playScenarioPositive() {
+    const t = audioCtx.currentTime;
+    const g = audioCtx.createGain();
+    g.connect(audioCtx.destination);
+    g.gain.setValueAtTime(0.12, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.6);
+    // soft warm mallet tone
+    const o = audioCtx.createOscillator();
+    o.type = 'sine';
+    o.frequency.setValueAtTime(440, t);
+    o.frequency.exponentialRampToValueAtTime(660, t + 0.15);
+    o.connect(g);
+    o.start(t);
+    o.stop(t + 0.6);
+  }
+
+  function playScenarioNegative() {
+    const t = audioCtx.currentTime;
+    const g = audioCtx.createGain();
+    g.connect(audioCtx.destination);
+    g.gain.setValueAtTime(0.1, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
+    // gentle low descending note
+    const o = audioCtx.createOscillator();
+    o.type = 'sine';
+    o.frequency.setValueAtTime(280, t);
+    o.frequency.exponentialRampToValueAtTime(180, t + 0.4);
+    o.connect(g);
+    o.start(t);
+    o.stop(t + 0.5);
+  }
+
   const CATEGORIES = {
     'first-aid':   { name: 'First Aid',              icon: '🏥', color: 'var(--cat-first-aid)' },
     'shelter':     { name: 'Shelter',                 icon: '⛺', color: 'var(--cat-shelter)' },
@@ -60,6 +93,8 @@
   let currentPlayer = null;
   let data = null;
   let quizState = null;
+  let scenariosData = [];
+  let scenarioState = null;
 
   // ── DOM refs ──
   const $ = (sel) => document.querySelector(sel);
@@ -88,6 +123,7 @@
       streak: 0,
       bestStreak: 0,
       lastDate: null,
+      scenarioGrades: {},
     };
   }
 
@@ -98,6 +134,7 @@
         const d = JSON.parse(raw);
         d.mastered = d.mastered || [];
         d.failed = d.failed || [];
+        d.scenarioGrades = d.scenarioGrades || {};
         return d;
       }
     } catch (_) {}
@@ -484,6 +521,285 @@
     showScreen('results');
   }
 
+  // ── Scenario helpers ──
+  const GRADE_WEIGHTS = {
+    'A': 100, 'A-': 92, 'B+': 85, 'B': 80, 'B-': 72,
+    'C+': 65, 'C': 60, 'C-': 55,
+    'D+': 45, 'D': 30, 'F': 0
+  };
+
+  function calcScenarioScore(answers, scenario) {
+    const weights = scenario.debrief.option_grade_weights || GRADE_WEIGHTS;
+    const total = answers.reduce((sum, a) => sum + (weights[a.grade] || 0), 0);
+    return Math.round(total / answers.length);
+  }
+
+  function scoreToLetterGrade(score, thresholds) {
+    if (score >= thresholds.A.min_score) return 'A';
+    if (score >= thresholds.B.min_score) return 'B';
+    if (score >= thresholds.C.min_score) return 'C';
+    return 'D';
+  }
+
+  function loadScenarios() {
+    scenariosData = (typeof SCENARIOS !== 'undefined') ? SCENARIOS : [];
+  }
+
+  // ── Scenario Picker ──
+  function renderScenarioPicker() {
+    const list = $('#scenario-list');
+    list.innerHTML = '';
+
+    if (scenariosData.length === 0) {
+      list.innerHTML = '<p style="color:var(--text-dim);padding:40px;text-align:center">No scenarios available yet.</p>';
+      showScreen('scenario-picker');
+      return;
+    }
+
+    const diffColors = { easy: 'var(--primary)', intermediate: 'var(--accent)', hard: 'var(--danger)', expert: 'var(--danger)' };
+
+    scenariosData.forEach(scenario => {
+      const saved = data.scenarioGrades[scenario.id];
+      const card = document.createElement('div');
+      card.className = 'scenario-card';
+      const diffColor = diffColors[scenario.meta.difficulty] || 'var(--text-dim)';
+
+      card.innerHTML = `
+        <div class="scenario-card-header">
+          <h3>${scenario.meta.title}</h3>
+          <span class="scenario-difficulty" style="color:${diffColor}">${scenario.meta.difficulty}</span>
+        </div>
+        <div class="scenario-card-meta">
+          <span>📍 ${scenario.meta.setting}</span>
+          <span>⏱ ~${scenario.meta.estimated_minutes} min</span>
+        </div>
+        <div class="scenario-card-tags">
+          ${scenario.meta.tags.map(t => `<span class="scenario-tag">${t.replace(/_/g, ' ')}</span>`).join('')}
+        </div>
+        <div class="scenario-card-footer">
+          ${saved
+            ? `<span class="scenario-best-grade">Best: <strong>${saved.grade}</strong> (${saved.score}/100)</span>`
+            : '<span class="scenario-new">NEW</span>'}
+          <button class="btn btn-primary btn-sm scenario-start-btn">${saved ? 'Replay' : 'Start'}</button>
+        </div>
+      `;
+
+      card.querySelector('.scenario-start-btn').addEventListener('click', () => startScenario(scenario));
+      list.appendChild(card);
+    });
+
+    showScreen('scenario-picker');
+  }
+
+  // ── Scenario Player ──
+  function startScenario(scenario) {
+    scenarioState = {
+      scenario,
+      currentDPIndex: 0,
+      answers: [],
+      lastConsequence: null,
+    };
+    renderScenarioIntro();
+    showScreen('scenario-play');
+  }
+
+  function renderScenarioIntro() {
+    const s = scenarioState.scenario;
+    const totalDP = s.decision_points.length;
+    const body = $('#scenario-body');
+
+    $('#scenario-progress-fill').style.width = '0%';
+    $('#scenario-progress-label').textContent = `0 / ${totalDP}`;
+
+    const narrativeHtml = s.intro.narrative
+      .split('\n\n')
+      .map(p => `<p>${p}</p>`)
+      .join('');
+
+    body.innerHTML = `
+      <div class="scenario-intro">
+        <h2 class="scenario-title">${s.meta.title}</h2>
+        <div class="scenario-narrative">${narrativeHtml}</div>
+        <div class="scenario-gear">
+          <h3>Your Gear</h3>
+          <ul>${s.intro.gear.map(g => `<li>${g}</li>`).join('')}</ul>
+        </div>
+        <div class="scenario-threat">
+          <strong>Threat:</strong> ${s.intro.threat_summary}
+        </div>
+        <button id="btn-scenario-begin" class="btn btn-primary btn-lg">Begin Scenario →</button>
+      </div>
+    `;
+
+    body.querySelector('#btn-scenario-begin').addEventListener('click', () => {
+      renderDecisionPoint();
+    });
+  }
+
+  function renderDecisionPoint() {
+    const s = scenarioState.scenario;
+    const dpIndex = scenarioState.currentDPIndex;
+    const dp = s.decision_points[dpIndex];
+    const totalDP = s.decision_points.length;
+    const body = $('#scenario-body');
+
+    $('#scenario-progress-fill').style.width = ((dpIndex / totalDP) * 100) + '%';
+    $('#scenario-progress-label').textContent = `${dpIndex + 1} / ${totalDP}`;
+
+    const bridgeHtml = scenarioState.lastConsequence
+      ? `<div class="scenario-bridge">${scenarioState.lastConsequence}</div>`
+      : '';
+
+    body.innerHTML = `
+      <div class="scenario-decision">
+        ${bridgeHtml}
+        <div class="scenario-dp-label">Decision ${dp.sequence} of ${totalDP}</div>
+        <h2 class="scenario-situation">${dp.situation}</h2>
+        <div class="scenario-options" id="scenario-options"></div>
+      </div>
+    `;
+
+    const optContainer = body.querySelector('#scenario-options');
+    dp.options.forEach((opt) => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.innerHTML = `<span class="option-letter">${opt.id}</span><span>${opt.text}</span>`;
+      btn.addEventListener('click', () => handleScenarioAnswer(dp, opt));
+      optContainer.appendChild(btn);
+    });
+  }
+
+  function handleScenarioAnswer(dp, selectedOption) {
+    // Disable all buttons
+    const buttons = $$('#scenario-options .option-btn');
+    buttons.forEach(btn => btn.classList.add('disabled'));
+
+    scenarioState.answers.push({
+      dpId: dp.id,
+      optionId: selectedOption.id,
+      grade: selectedOption.grade,
+      correct: selectedOption.correct,
+    });
+
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    selectedOption.correct ? playScenarioPositive() : playScenarioNegative();
+
+    scenarioState.lastConsequence = selectedOption.consequence;
+    renderConsequence(dp, selectedOption);
+  }
+
+  function renderConsequence(dp, selectedOption) {
+    const s = scenarioState.scenario;
+    const totalDP = s.decision_points.length;
+    const body = $('#scenario-body');
+    const isLast = scenarioState.currentDPIndex >= totalDP - 1;
+    const bestOption = dp.options.find(o => o.correct);
+
+    const gradeColor = selectedOption.correct ? 'var(--primary)' :
+                       selectedOption.grade.startsWith('B') ? 'var(--accent)' : 'var(--danger)';
+
+    body.innerHTML = `
+      <div class="scenario-consequence">
+        <div class="scenario-grade-badge" style="border-color:${gradeColor}; color:${gradeColor}">
+          Grade: ${selectedOption.grade}
+        </div>
+        <div class="scenario-consequence-text">
+          <h3>What Happened</h3>
+          <p>${selectedOption.consequence}</p>
+        </div>
+        <div class="scenario-teaching">
+          <h3>Key Insight</h3>
+          <p>${selectedOption.teaching_point}</p>
+        </div>
+        ${!selectedOption.correct && bestOption ? `
+          <div class="scenario-best-answer">
+            <h3>Best Choice</h3>
+            <p><strong>${bestOption.id}:</strong> ${bestOption.text}</p>
+          </div>
+        ` : ''}
+        <button id="btn-scenario-continue" class="btn btn-primary btn-lg">
+          ${isLast ? 'See Results →' : 'Next Decision →'}
+        </button>
+      </div>
+    `;
+
+    body.querySelector('#btn-scenario-continue').addEventListener('click', () => {
+      if (isLast) {
+        finishScenario();
+      } else {
+        scenarioState.currentDPIndex++;
+        renderDecisionPoint();
+      }
+    });
+  }
+
+  // ── Scenario Debrief ──
+  function finishScenario() {
+    const s = scenarioState.scenario;
+    const answers = scenarioState.answers;
+    const score = calcScenarioScore(answers, s);
+    const letterGrade = scoreToLetterGrade(score, s.debrief.grade_thresholds);
+    const gradeInfo = s.debrief.grade_thresholds[letterGrade];
+
+    // Persist best grade
+    const prev = data.scenarioGrades[s.id];
+    if (!prev || score > prev.score) {
+      data.scenarioGrades[s.id] = { grade: letterGrade, score };
+    }
+
+    // Award XP
+    const xpAward = letterGrade === 'A' ? 50 : letterGrade === 'B' ? 35 : letterGrade === 'C' ? 20 : 10;
+    data.xp += xpAward;
+    saveData();
+
+    const emojiMap = { A: '🏆', B: '🌟', C: '💪', D: '📚' };
+    $('#scenario-debrief-emoji').textContent = emojiMap[letterGrade] || '🎯';
+    $('#scenario-debrief-title').textContent = gradeInfo.label;
+    $('#scenario-debrief-subtitle').textContent = gradeInfo.description;
+
+    const gradeColorMap = { A: 'var(--primary)', B: 'var(--secondary)', C: 'var(--accent)', D: 'var(--danger)' };
+
+    $('#scenario-grade-box').innerHTML = `
+      <div class="scenario-final-grade" style="color:${gradeColorMap[letterGrade] || 'var(--text)'}">
+        ${letterGrade}
+      </div>
+      <div class="scenario-score-label">${score} / 100 · +${xpAward} XP</div>
+      ${prev && score > prev.score ? '<div class="scenario-improved">New Personal Best!</div>' : ''}
+    `;
+
+    $('#scenario-core-lesson').innerHTML = `
+      <h3>Core Lesson</h3>
+      <p>${s.debrief.core_lesson}</p>
+    `;
+
+    $('#scenario-skills').innerHTML = `
+      <h3>Skills Tested</h3>
+      <ul>${s.debrief.key_skills_tested.map(sk => `<li>${sk}</li>`).join('')}</ul>
+    `;
+
+    const reviewList = $('#scenario-review-list');
+    reviewList.innerHTML = '';
+    s.decision_points.forEach((dp, i) => {
+      const ans = answers[i];
+      const chosenOpt = dp.options.find(o => o.id === ans.optionId);
+      const bestOpt = dp.options.find(o => o.correct);
+
+      const item = document.createElement('div');
+      item.className = 'review-item';
+      item.style.borderLeftColor = ans.correct ? 'var(--primary)' : 'var(--danger)';
+      item.innerHTML = `
+        <div class="review-item-q">Decision ${dp.sequence}: ${dp.situation.length > 100 ? dp.situation.substring(0, 100) + '…' : dp.situation}</div>
+        <div class="review-item-your">Your choice: <strong>${chosenOpt.id}</strong> — ${chosenOpt.text} <span style="color:${ans.correct ? 'var(--primary)' : 'var(--accent)'}">(${ans.grade})</span></div>
+        ${!ans.correct ? `<div class="review-item-correct">Best: <strong>${bestOpt.id}</strong> — ${bestOpt.text}</div>` : ''}
+        <div class="review-item-exp">${chosenOpt.teaching_point}</div>
+      `;
+      reviewList.appendChild(item);
+    });
+
+    if (letterGrade === 'A') spawnConfetti();
+    showScreen('scenario-debrief');
+  }
+
   // ── Reset ──
   function showResetModal() {
     const overlay = document.createElement('div');
@@ -538,16 +854,39 @@
     $('#btn-back-dash').addEventListener('click', () => renderDashboard());
     $('#btn-play-again').addEventListener('click', () => startQuiz(quizState?.mode || 'random'));
 
+    // Scenarios
+    $('#btn-scenarios').addEventListener('click', () => renderScenarioPicker());
+    $('#btn-scenario-back').addEventListener('click', () => renderDashboard());
+    $('#btn-scenario-quit').addEventListener('click', () => renderScenarioPicker());
+    $('#btn-scenario-debrief-back').addEventListener('click', () => renderScenarioPicker());
+    $('#btn-scenario-replay').addEventListener('click', () => startScenario(scenarioState.scenario));
+
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
-      if (!$('#screen-quiz').classList.contains('active')) return;
-      const buttons = $$('.option-btn:not(.disabled)');
-      if (e.key >= '1' && e.key <= '5') {
-        const idx = parseInt(e.key) - 1;
-        if (buttons[idx]) buttons[idx].click();
+      // Quiz shortcuts
+      if ($('#screen-quiz').classList.contains('active')) {
+        const buttons = $$('.option-btn:not(.disabled)');
+        if (e.key >= '1' && e.key <= '5') {
+          const idx = parseInt(e.key) - 1;
+          if (buttons[idx]) buttons[idx].click();
+        }
+        if (e.key === 'Enter' && !$('#btn-next').classList.contains('hidden')) {
+          nextQuestion();
+        }
       }
-      if (e.key === 'Enter' && !$('#btn-next').classList.contains('hidden')) {
-        nextQuestion();
+      // Scenario shortcuts
+      if ($('#screen-scenario-play').classList.contains('active')) {
+        const scenButtons = $$('#scenario-options .option-btn:not(.disabled)');
+        if (e.key >= '1' && e.key <= '4') {
+          const idx = parseInt(e.key) - 1;
+          if (scenButtons[idx]) scenButtons[idx].click();
+        }
+        if (e.key === 'Enter') {
+          const cont = $('#btn-scenario-continue');
+          if (cont) cont.click();
+          const begin = $('#btn-scenario-begin');
+          if (begin) begin.click();
+        }
       }
     });
   }
@@ -642,6 +981,7 @@
 
   // ── Init ──
   function init() {
+    loadScenarios();
     migrateLegacy();
     initEvents();
     initCheatMenu();
