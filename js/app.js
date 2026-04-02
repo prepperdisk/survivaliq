@@ -80,13 +80,19 @@
   }
 
   const CATEGORIES = {
-    'first-aid':   { name: 'First Aid',              icon: '🏥', color: 'var(--cat-first-aid)' },
-    'shelter':     { name: 'Shelter',                 icon: '⛺', color: 'var(--cat-shelter)' },
-    'water':       { name: 'Water',                   icon: '💧', color: 'var(--cat-water)' },
-    'food':        { name: 'Food & Nutrition',        icon: '🥫', color: 'var(--cat-food)' },
-    'comms':       { name: 'Emergency Comms',         icon: '📡', color: 'var(--cat-comms)' },
-    'navigation':  { name: 'Navigation',              icon: '🧭', color: 'var(--cat-navigation)' },
-    'rescue':      { name: 'Rescue',                  icon: '🚁', color: 'var(--cat-rescue)' },
+    'first-aid':      { name: 'First Aid',                   icon: '🏥', color: 'var(--cat-first-aid)' },
+    'shelter':        { name: 'Shelter',                      icon: '⛺', color: 'var(--cat-shelter)' },
+    'water':          { name: 'Water',                        icon: '💧', color: 'var(--cat-water)' },
+    'food':           { name: 'Food & Nutrition',             icon: '🥫', color: 'var(--cat-food)' },
+    'comms':          { name: 'Emergency Comms',              icon: '📡', color: 'var(--cat-comms)' },
+    'navigation':     { name: 'Navigation',                   icon: '🧭', color: 'var(--cat-navigation)' },
+    'rescue':         { name: 'Rescue',                       icon: '🚁', color: 'var(--cat-rescue)' },
+    'psychology':     { name: 'Survival Psychology',           icon: '🧠', color: 'var(--cat-psychology)' },
+    'fire-clothing':  { name: 'Fire, Clothing & Equipment',   icon: '🔥', color: 'var(--cat-fire-clothing)' },
+    'planning':       { name: 'Planning & Preparation',       icon: '📋', color: 'var(--cat-planning)' },
+    'hazards-ppe':    { name: 'Hazards & PPE',                icon: '⚠️', color: 'var(--cat-hazards-ppe)' },
+    'campcraft':      { name: 'Campcraft',                    icon: '🏕️', color: 'var(--cat-campcraft)' },
+    'priorities':     { name: 'Survival Priorities',           icon: '🎯', color: 'var(--cat-priorities)' },
   };
 
   // ── State ──
@@ -302,16 +308,13 @@
       card.className = 'category-card';
       card.innerHTML = `
         <div class="category-card-header">
-          <div class="category-icon" style="background:${cat.color}20; color:${cat.color}">${cat.icon}</div>
-          <div>
-            <h3>${cat.name}</h3>
-            <span class="cat-count">${catQuestions.length} questions</span>
-          </div>
+          <div class="category-icon" style="color:${cat.color}">${cat.icon}</div>
+          <h3>${cat.name}</h3>
         </div>
         <div class="cat-progress-bar">
           <div class="cat-progress-fill" style="width:${catPct}%; background:${cat.color}"></div>
         </div>
-        <div class="cat-progress-label">${catMastered} / ${catQuestions.length} mastered (${catPct}%)</div>
+        <div class="cat-progress-label">${catMastered}/${catQuestions.length}</div>
       `;
       grid.appendChild(card);
     }
@@ -521,6 +524,50 @@
     showScreen('results');
   }
 
+  // ── Scenario effects ──
+  let activeEffect = null;
+
+  function showEffect(type) {
+    clearEffect();
+    if (type === 'fire') {
+      const el = document.createElement('div');
+      el.className = 'effect-fire';
+      el.id = 'scenario-effect';
+
+      // Flame tongues
+      const flames = document.createElement('div');
+      flames.className = 'fire-flames';
+      for (let i = 0; i < 7; i++) {
+        const flame = document.createElement('div');
+        flame.className = 'fire-flame';
+        flames.appendChild(flame);
+      }
+      el.appendChild(flames);
+
+      // Ember particles
+      for (let i = 0; i < 12; i++) {
+        const ember = document.createElement('div');
+        ember.className = 'fire-ember';
+        ember.style.left = (40 + Math.random() * 20) + '%';
+        ember.style.bottom = '10px';
+        ember.style.animationDuration = (2 + Math.random() * 3) + 's';
+        ember.style.animationDelay = (Math.random() * 4) + 's';
+        ember.style.setProperty('--drift', (Math.random() * 40 - 20) + 'px');
+        el.appendChild(ember);
+      }
+
+      document.body.appendChild(el);
+      activeEffect = el;
+    }
+  }
+
+  function clearEffect() {
+    if (activeEffect) {
+      activeEffect.remove();
+      activeEffect = null;
+    }
+  }
+
   // ── Scenario helpers ──
   const GRADE_WEIGHTS = {
     'A': 100, 'A-': 92, 'B+': 85, 'B': 80, 'B-': 72,
@@ -637,6 +684,7 @@
   }
 
   function renderDecisionPoint() {
+    clearEffect();
     const s = scenarioState.scenario;
     const dpIndex = scenarioState.currentDPIndex;
     const dp = s.decision_points[dpIndex];
@@ -685,6 +733,12 @@
     selectedOption.correct ? playScenarioPositive() : playScenarioNegative();
 
     scenarioState.lastConsequence = selectedOption.consequence;
+
+    // Trigger visual effect if the option has one
+    if (selectedOption.effect) {
+      showEffect(selectedOption.effect);
+    }
+
     renderConsequence(dp, selectedOption);
   }
 
@@ -735,6 +789,7 @@
 
   // ── Scenario Debrief ──
   function finishScenario() {
+    clearEffect();
     const s = scenarioState.scenario;
     const answers = scenarioState.answers;
     const score = calcScenarioScore(answers, s);
@@ -857,7 +912,7 @@
     // Scenarios
     $('#btn-scenarios').addEventListener('click', () => renderScenarioPicker());
     $('#btn-scenario-back').addEventListener('click', () => renderDashboard());
-    $('#btn-scenario-quit').addEventListener('click', () => renderScenarioPicker());
+    $('#btn-scenario-quit').addEventListener('click', () => { clearEffect(); renderScenarioPicker(); });
     $('#btn-scenario-debrief-back').addEventListener('click', () => renderScenarioPicker());
     $('#btn-scenario-replay').addEventListener('click', () => startScenario(scenarioState.scenario));
 

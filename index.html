@@ -71,15 +71,23 @@
       <div class="category-grid" id="category-grid"></div>
 
       <div class="dash-actions">
-        <button id="btn-start-quiz" class="btn btn-primary btn-lg pulse">
-          Start Quiz <span class="btn-sub">20 Questions</span>
-        </button>
-        <button id="btn-start-weak" class="btn btn-secondary btn-lg">
-          Practice Weak Areas <span class="btn-sub">Focus on mistakes</span>
-        </button>
-        <button id="btn-scenarios" class="btn btn-accent btn-lg">
-          Survival Scenarios <span class="btn-sub">Interactive decisions</span>
-        </button>
+        <div class="action-cards">
+          <button id="btn-start-quiz" class="action-card action-card--primary">
+            <span class="action-icon">▶</span>
+            <span class="action-label">Start Quiz</span>
+            <span class="action-desc">20 questions</span>
+          </button>
+          <button id="btn-start-weak" class="action-card action-card--secondary">
+            <span class="action-icon">🎯</span>
+            <span class="action-label">Weak Areas</span>
+            <span class="action-desc">Focus on mistakes</span>
+          </button>
+          <button id="btn-scenarios" class="action-card action-card--accent">
+            <span class="action-icon">🗺</span>
+            <span class="action-label">Scenarios</span>
+            <span class="action-desc">Interactive decisions</span>
+          </button>
+        </div>
         <div class="dash-bottom-actions">
           <button id="btn-switch-player" class="btn btn-ghost btn-sm">Switch Player</button>
           <button id="btn-reset" class="btn btn-ghost btn-sm">Reset Progress</button>
