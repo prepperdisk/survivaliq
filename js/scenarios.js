@@ -827,6 +827,7 @@ const SCENARIOS = [
       {
         "id": "dp_002",
         "sequence": 2,
+        "ambient_effect": "fire",
         "situation": "It's 9 AM. The living room is warm from the fire, but you're thinking about the food. The refrigerator has been off for 3 hours. The freezer is full. Your mother-in-law's blood pressure medication is in the fridge. How do you handle the food and medication situation?",
         "options": [
           {
@@ -834,6 +835,7 @@ const SCENARIOS = [
             "text": "Move all perishable food outside into coolers or bags \u2014 it's 22\u00b0F, nature is your refrigerator. Keep the fridge and freezer doors shut",
             "grade": "A",
             "correct": true,
+            "effect": "snow",
             "consequence": "You bag the medication and most-perishable refrigerator items and place them in a cooler on the shaded porch. The freezer stays shut \u2014 it'll hold for 48 hours if you don't open it. The medication stays at safe temperature.",
             "teaching_point": "At 22\u00b0F, the outdoors is a natural refrigerator for perishable food (keep it shaded and in animal-proof containers). A full freezer holds safe temperature for approximately 48 hours if the door stays closed (24 hours if half full). Minimize door openings. Temperature-sensitive medications can be stored outside in the same temperature range. (Source: USDA/FoodSafety.gov \u2014 Food Safety During Power Outages; FDA \u2014 Medication Storage During Emergencies)"
           },
@@ -866,6 +868,7 @@ const SCENARIOS = [
       {
         "id": "dp_003",
         "sequence": 3,
+        "ambient_effect": "snow",
         "situation": "It's noon on day one. Your phone is at 52% and you've learned the outage could last 3-5 days. Your mother-in-law needs to contact her doctor about the medication. Your spouse wants to post updates to family on social media. How do you manage communication and power?",
         "options": [
           {

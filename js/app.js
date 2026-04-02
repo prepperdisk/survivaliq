@@ -558,6 +558,27 @@
 
       document.body.appendChild(el);
       activeEffect = el;
+    } else if (type === 'snow') {
+      const el = document.createElement('div');
+      el.className = 'effect-snow';
+      el.id = 'scenario-effect';
+
+      for (let i = 0; i < 40; i++) {
+        const flake = document.createElement('div');
+        flake.className = 'snow-flake';
+        const size = 2 + Math.random() * 5;
+        flake.style.width = size + 'px';
+        flake.style.height = size + 'px';
+        flake.style.left = Math.random() * 100 + '%';
+        flake.style.animationDuration = (5 + Math.random() * 8) + 's';
+        flake.style.animationDelay = (Math.random() * 6) + 's';
+        flake.style.setProperty('--drift', (Math.random() * 60 - 30) + 'px');
+        flake.style.setProperty('--flake-opacity', (0.3 + Math.random() * 0.5).toFixed(2));
+        el.appendChild(flake);
+      }
+
+      document.body.appendChild(el);
+      activeEffect = el;
     }
   }
 
@@ -684,10 +705,17 @@
   }
 
   function renderDecisionPoint() {
-    clearEffect();
     const s = scenarioState.scenario;
     const dpIndex = scenarioState.currentDPIndex;
     const dp = s.decision_points[dpIndex];
+
+    // Show ambient effect for this decision point, or clear any existing one
+    if (dp.ambient_effect) {
+      clearEffect();
+      showEffect(dp.ambient_effect);
+    } else {
+      clearEffect();
+    }
     const totalDP = s.decision_points.length;
     const body = $('#scenario-body');
 
