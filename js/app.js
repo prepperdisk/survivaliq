@@ -405,13 +405,21 @@
       mediaBox.classList.add('hidden');
     }
 
+    // Shuffle option display order
+    const indices = q.o.map((_, i) => i);
+    for (let i = indices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [indices[i], indices[j]] = [indices[j], indices[i]];
+    }
+    quizState.optionMap = indices; // maps display position → original index
+
     const optContainer = $('#quiz-options');
     optContainer.innerHTML = '';
-    q.o.forEach((opt, i) => {
+    indices.forEach((origIdx, displayIdx) => {
       const btn = document.createElement('button');
       btn.className = 'option-btn';
-      btn.innerHTML = `<span class="option-letter">${LETTERS[i]}</span><span>${opt}</span>`;
-      btn.addEventListener('click', () => handleAnswer(i));
+      btn.innerHTML = `<span class="option-letter">${LETTERS[displayIdx]}</span><span>${q.o[origIdx]}</span>`;
+      btn.addEventListener('click', () => handleAnswer(origIdx));
       optContainer.appendChild(btn);
     });
 
@@ -423,11 +431,12 @@
     const q = quizState.questions[quizState.currentIndex];
     const correct = selectedIndex === q.a;
     const buttons = $$('.option-btn');
+    const map = quizState.optionMap; // maps display position → original index
 
-    buttons.forEach((btn, i) => {
+    buttons.forEach((btn, displayIdx) => {
       btn.classList.add('disabled');
-      if (i === q.a) btn.classList.add('correct');
-      if (i === selectedIndex && !correct) btn.classList.add('incorrect');
+      if (map[displayIdx] === q.a) btn.classList.add('correct');
+      if (map[displayIdx] === selectedIndex && !correct) btn.classList.add('incorrect');
     });
 
     quizState.answers.push({ questionId: q.id, selectedIndex, correct });
