@@ -1023,11 +1023,22 @@
   function initCheatMenu() {
     const overlay = $('#cheat-overlay');
     const input = $('#cheat-id-input');
+    const catSelect = $('#cheat-cat-select');
+
+    // Populate category dropdown
+    for (const [key, cat] of Object.entries(CATEGORIES)) {
+      const count = QUESTIONS.filter(q => q.cat === key).length;
+      const opt = document.createElement('option');
+      opt.value = key;
+      opt.textContent = `${cat.icon} ${cat.name} (${count})`;
+      catSelect.appendChild(opt);
+    }
 
     function toggleCheat() {
       overlay.classList.toggle('hidden');
       if (!overlay.classList.contains('hidden')) {
         input.value = '';
+        catSelect.value = '';
         input.focus();
       }
     }
@@ -1042,6 +1053,40 @@
       jumpToQuestion(id);
     }
 
+    function playCategory() {
+      const cat = catSelect.value;
+      if (!cat) {
+        toast('Choose a category', 'info');
+        return;
+      }
+      const catQuestions = QUESTIONS.filter(q => q.cat === cat);
+      if (catQuestions.length === 0) {
+        toast('No questions in this category', 'info');
+        return;
+      }
+      overlay.classList.add('hidden');
+
+      // Ensure player is loaded
+      if (!currentPlayer) {
+        const players = getPlayers();
+        if (players.length > 0) {
+          selectPlayer(players[0]);
+        } else {
+          createPlayer('Debug');
+        }
+      }
+
+      quizState = {
+        questions: catQuestions,
+        currentIndex: 0,
+        answers: [],
+        mode: 'random',
+        correctCount: 0,
+      };
+      renderQuestion();
+      showScreen('quiz');
+    }
+
     document.addEventListener('keydown', (e) => {
       if (e.ctrlKey && e.shiftKey && e.key === 'G') {
         e.preventDefault();
@@ -1053,6 +1098,7 @@
     });
 
     $('#cheat-go').addEventListener('click', goToId);
+    $('#cheat-cat-go').addEventListener('click', playCategory);
     $('#cheat-close').addEventListener('click', () => overlay.classList.add('hidden'));
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') goToId();

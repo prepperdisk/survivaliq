@@ -1055,6 +1055,36 @@ body {
   outline: none;
   border-color: var(--primary);
 }
+.cheat-section {
+  margin-bottom: 16px;
+  text-align: left;
+}
+.cheat-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+.cheat-select {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 0.9rem;
+  font-weight: 600;
+  appearance: none;
+  cursor: pointer;
+}
+.cheat-select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
 .cheat-hint {
   font-size: 0.75rem;
   color: var(--text-dim);

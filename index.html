@@ -215,10 +215,20 @@
   <!-- Hidden cheat menu (Ctrl+Shift+G) -->
   <div id="cheat-overlay" class="cheat-overlay hidden">
     <div class="cheat-modal">
-      <h3>Go to Question</h3>
-      <div class="cheat-input-row">
-        <input type="number" id="cheat-id-input" placeholder="Question ID (1-252)" min="1" max="999">
-        <button id="cheat-go" class="btn btn-primary btn-sm">Go</button>
+      <h3>Dev Menu</h3>
+      <div class="cheat-section">
+        <label class="cheat-label">Jump to Question</label>
+        <div class="cheat-input-row">
+          <input type="number" id="cheat-id-input" placeholder="Question ID" min="1" max="999">
+          <button id="cheat-go" class="btn btn-primary btn-sm">Go</button>
+        </div>
+      </div>
+      <div class="cheat-section">
+        <label class="cheat-label">Play Category</label>
+        <select id="cheat-cat-select" class="cheat-select">
+          <option value="">Choose a category…</option>
+        </select>
+        <button id="cheat-cat-go" class="btn btn-primary btn-sm" style="margin-top:6px;width:100%">Play All in Category</button>
       </div>
       <p class="cheat-hint">Ctrl+Shift+G to toggle &middot; Esc to close</p>
       <button id="cheat-close" class="btn btn-ghost btn-sm">Close</button>
