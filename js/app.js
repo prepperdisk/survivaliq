@@ -10,6 +10,50 @@
   const ACTIVE_KEY = 'survivaliq_active';
   const LETTERS = ['A', 'B', 'C', 'D', 'E'];
 
+  // ── API persistence layer ──
+  const API_URL = 'api.php';
+  const API_TIMEOUT = 2000;
+  let apiAvailable = false;
+
+  const SurvivalAPI = {
+    async check() {
+      try {
+        const ctrl = new AbortController();
+        const t = setTimeout(() => ctrl.abort(), API_TIMEOUT);
+        const res = await fetch(`${API_URL}?action=health`, { signal: ctrl.signal });
+        clearTimeout(t);
+        const json = await res.json();
+        return json.ok === true;
+      } catch (_) {
+        return false;
+      }
+    },
+    async getPlayers() {
+      const res = await fetch(`${API_URL}?action=players`);
+      const json = await res.json();
+      return json.players || [];
+    },
+    async loadPlayerData(name) {
+      const res = await fetch(`${API_URL}?action=load&name=${encodeURIComponent(name)}`);
+      const json = await res.json();
+      return json.data || null;
+    },
+    async savePlayerData(name, playerData) {
+      await fetch(`${API_URL}?action=save`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, data: playerData }),
+      });
+    },
+    async createPlayer(name) {
+      await fetch(`${API_URL}?action=create`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name }),
+      });
+    },
+  };
+
   // ── Sound effects (Web Audio API — no files needed) ──
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -150,6 +194,9 @@
   function saveData() {
     if (!currentPlayer) return;
     localStorage.setItem(storageKeyFor(currentPlayer), JSON.stringify(data));
+    if (apiAvailable) {
+      SurvivalAPI.savePlayerData(currentPlayer, data).catch(() => {});
+    }
   }
 
   function selectPlayer(name) {
@@ -173,6 +220,9 @@
     if (!players.includes(name)) {
       players.push(name);
       savePlayers(players);
+    }
+    if (apiAvailable) {
+      SurvivalAPI.createPlayer(name).catch(() => {});
     }
     selectPlayer(name);
   }
@@ -1118,9 +1168,54 @@
   }
 
   // ── Init ──
-  function init() {
+  async function init() {
     loadScenarios();
     migrateLegacy();
+
+    // Detect API and sync data
+    apiAvailable = await SurvivalAPI.check();
+    if (apiAvailable) {
+      try {
+        const apiPlayers = await SurvivalAPI.getPlayers();
+        const localPlayers = getPlayers();
+        const allPlayers = [...new Set([...localPlayers, ...apiPlayers])];
+
+        for (const name of allPlayers) {
+          const localData = loadPlayerData(name);
+          let apiData = null;
+          if (apiPlayers.includes(name)) {
+            apiData = await SurvivalAPI.loadPlayerData(name);
+          }
+
+          // Merge: keep whichever is more progressed (higher XP, then more mastered)
+          let best = localData;
+          if (apiData) {
+            const apiXP = apiData.xp || 0;
+            const localXP = localData.xp || 0;
+            if (apiXP > localXP) {
+              best = apiData;
+            } else if (apiXP === localXP) {
+              const apiM = (apiData.mastered || []).length;
+              const localM = (localData.mastered || []).length;
+              if (apiM > localM) best = apiData;
+            }
+          }
+
+          best.mastered = best.mastered || [];
+          best.failed = best.failed || [];
+          best.scenarioGrades = best.scenarioGrades || {};
+
+          // Write merged data to both stores
+          localStorage.setItem(storageKeyFor(name), JSON.stringify(best));
+          SurvivalAPI.savePlayerData(name, best).catch(() => {});
+        }
+
+        savePlayers(allPlayers);
+      } catch (_) {
+        // Sync failed — proceed with localStorage only
+      }
+    }
+
     initEvents();
     initCheatMenu();
     renderPlayerScreen();
