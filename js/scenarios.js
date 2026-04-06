@@ -1013,5 +1013,257 @@ const SCENARIOS = [
         "F": 0
       }
     }
+  },
+  {
+    "id": "scenario_005",
+    "meta": {
+      "title": "Ember in the Wind",
+      "category": "wildfire_evacuation",
+      "tags": ["wildfire", "evacuation", "decision_making", "smoke", "go_bag"],
+      "difficulty": "intermediate",
+      "setting": "Wildland-urban interface, foothills of the western US, late September",
+      "estimated_minutes": 12,
+      "season": "fall",
+      "environment": "wildland_urban_interface"
+    },
+    "intro": {
+      "narrative": "It's 2:15 PM on a bone-dry September afternoon. You live in a single-story home on the edge of a foothill community where oak and chaparral push right up to the back fence. The wind has been gusting hard out of the east since morning — 25 to 35 mph, dry as paper. Humidity is 9%.\n\nA Red Flag Warning has been in effect since yesterday. You just got a wireless emergency alert: a fast-moving brush fire has ignited 6 miles east of you and is being pushed west by the wind. No mandatory evacuation order yet — only an evacuation WARNING for your zone. You can smell smoke. The sky to the east is turning brown.\n\nYour spouse is at work 30 minutes away. Your dog is in the yard. The kids are at school across town.",
+      "gear": [
+        "SUV in the driveway, 3/4 tank of gas",
+        "Phone at 80%, working signal",
+        "Garden hose and exterior spigots",
+        "Go-bag in the hall closet (built last year, never reviewed)",
+        "Important documents in a fireproof box",
+        "N95 masks left over from last fire season",
+        "Dog, dog crate, dog food"
+      ],
+      "threat_summary": "Wind-driven wildfire, ember cast, narrow evacuation routes, family separated"
+    },
+    "decision_points": [
+      {
+        "id": "dp_001",
+        "sequence": 1,
+        "situation": "You just got the evacuation WARNING (not order). Smoke is visible east, wind is howling. What do you do in the first five minutes?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Wait for the mandatory evacuation order before doing anything — warnings often don't escalate",
+            "grade": "D",
+            "correct": false,
+            "consequence": "You lose 20+ minutes of clear-headed prep time. When the order comes, you'll be rushing while roads clog.",
+            "teaching_point": "In wind-driven wildfire, a warning is your prep window. By the time an order comes, conditions can already be dangerous. Treat warnings as 'pack now, leave soon.'"
+          },
+          {
+            "id": "B",
+            "text": "Start packing the car, load the dog, and pull up Watch Duty / local fire alerts to track the fire's behavior",
+            "grade": "A",
+            "correct": true,
+            "consequence": "Within five minutes you're situationally aware, packing in parallel, and ready to leave on a moment's notice. The dog is in the crate in the SUV.",
+            "teaching_point": "Warnings are your free time. Use them to load, get information, and reduce decision load for when conditions deteriorate. Real-time fire tracking apps are critical infrastructure now."
+          },
+          {
+            "id": "C",
+            "text": "Hose down the roof and exterior of the house immediately to fireproof it",
+            "grade": "C",
+            "correct": false,
+            "consequence": "You spend 25 minutes wetting things down. In 9% humidity and 30 mph wind, the surfaces are dry again before you finish. Meanwhile you haven't packed.",
+            "teaching_point": "Pre-wetting a structure has near-zero value in dry, windy conditions — it evaporates almost instantly. Defensible space matters; last-minute hosing usually doesn't."
+          },
+          {
+            "id": "D",
+            "text": "Drive to the school right now to grab the kids before traffic builds",
+            "grade": "B-",
+            "correct": false,
+            "consequence": "Schools have evacuation plans and contact you when activated. You may cross the fire's projected path or get stuck while your house is unattended and unloaded.",
+            "teaching_point": "Schools are required to manage student evacuation and reunification. Trust the plan unless they tell you otherwise — coordinate, don't intercept."
+          }
+        ]
+      },
+      {
+        "id": "dp_002",
+        "sequence": 2,
+        "situation": "It's 2:35 PM. You have ten minutes of useful packing time before you want to be ready to roll. The go-bag hasn't been opened in a year. What do you grab beyond it?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Documents box, medications, phone chargers, hard drives or laptops, and a change of clothes per person",
+            "grade": "A",
+            "correct": true,
+            "consequence": "You hit the irreplaceables and the practical needs for 72 hours away from home. Everything fits in two trips to the SUV.",
+            "teaching_point": "The 'six P's' framework: People, Pets, Papers, Prescriptions, Pictures, Personal computer. Irreplaceables first, comfort items last."
+          },
+          {
+            "id": "B",
+            "text": "Family photo albums, heirlooms, and sentimental items from every room",
+            "grade": "C",
+            "correct": false,
+            "consequence": "You spend 20 minutes wandering room to room making emotional choices. You forget your medications.",
+            "teaching_point": "Sentimental items matter, but only after irreplaceable functional items (meds, documents, ID). Decide on sentimental items in advance, not in a panic."
+          },
+          {
+            "id": "C",
+            "text": "Fill every container you can with water in case the house survives but utilities don't",
+            "grade": "C-",
+            "correct": false,
+            "consequence": "Filling containers takes 15 minutes. If the house burns, none of it matters. If it doesn't, you can return for water.",
+            "teaching_point": "In an active evacuation, every minute spent on 'what if I come back' scenarios is a minute not spent on 'what if I can't.'"
+          },
+          {
+            "id": "D",
+            "text": "Skip extra packing — the go-bag is enough, just leave",
+            "grade": "B",
+            "correct": false,
+            "consequence": "Faster departure, but a year-old unreviewed go-bag may have expired meds, dead batteries, and missing documents. You'll feel the gaps in 12 hours.",
+            "teaching_point": "Go-bags need annual review. An unreviewed bag is a hopeful guess, not a plan. If you have ten minutes, use them to supplement what's likely stale."
+          }
+        ]
+      },
+      {
+        "id": "dp_003",
+        "sequence": 3,
+        "situation": "2:50 PM. The school has texted: students are being released to parents at a reunification site on the WEST side of town, away from the fire. Your spouse is driving home from the south. The fire alert app shows the fire has jumped a containment line and is now 3 miles east, moving fast. What's your move?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Drive home first to grab your spouse, then go to the kids together",
+            "grade": "D",
+            "correct": false,
+            "consequence": "Your spouse is already mobile. Routing everyone through the threatened area to converge is the worst possible plan.",
+            "teaching_point": "In evacuation, never converge on the threat. Each person moves away from danger toward a shared safe rally point."
+          },
+          {
+            "id": "B",
+            "text": "Leave now for the school reunification site. Text spouse to meet you there directly.",
+            "grade": "A",
+            "correct": true,
+            "consequence": "You roll out at 2:55 PM with the dog. Spouse acknowledges and reroutes. Everyone is converging on the same safe point from different directions, away from the fire.",
+            "teaching_point": "Pre-decided rally points are gold. When you don't have one, the safest shared destination becomes the rally point — and 'away from the fire' beats 'toward each other.'"
+          },
+          {
+            "id": "C",
+            "text": "Stay put until your spouse arrives so you can caravan together",
+            "grade": "D+",
+            "correct": false,
+            "consequence": "You burn 25 minutes waiting. The fire closes ground at the same time. Roads start to clog.",
+            "teaching_point": "Caravanning feels safer but costs time you don't have. Independent movement to a shared point is faster and more resilient if one vehicle gets stuck."
+          },
+          {
+            "id": "D",
+            "text": "Call 911 and ask them what to do",
+            "grade": "C-",
+            "correct": false,
+            "consequence": "You spend four minutes on hold during a regional emergency. The dispatcher tells you to follow local evacuation guidance — which you already have.",
+            "teaching_point": "911 is for life-threatening emergencies in progress, not for decision support. During a major incident, dispatch is overwhelmed and can't replace your own situational awareness."
+          }
+        ]
+      },
+      {
+        "id": "dp_004",
+        "sequence": 4,
+        "situation": "You're in the SUV. The most direct route to the school goes through a two-lane canyon road that runs east-west — the same axis as the wind and fire spread. A longer route loops north on a wider arterial, adding 12 minutes. Visibility is dropping; you can taste smoke. Which route?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Take the canyon — it's faster and you need to get to the kids",
+            "grade": "F",
+            "correct": false,
+            "consequence": "Canyon roads in wind-driven fires are deathtraps. They funnel fire, fill with smoke, and have no escape. People die on roads exactly like this.",
+            "teaching_point": "Narrow canyon roads aligned with the wind are the single most dangerous feature in a wildfire evacuation. The fastest route on the map is sometimes the route that kills you."
+          },
+          {
+            "id": "B",
+            "text": "Take the longer arterial route north — wider, more lanes, away from the fire's axis",
+            "grade": "A",
+            "correct": true,
+            "consequence": "You add 12 minutes but stay on a road with shoulders, multiple lanes, and movement options. Visibility stays workable.",
+            "teaching_point": "In wildfire evacuation, route choice is about survivability, not speed. Wide, multi-lane roads away from the fire's directional axis are always preferred — even if they're longer."
+          },
+          {
+            "id": "C",
+            "text": "Try the canyon, and if conditions deteriorate, turn around",
+            "grade": "D",
+            "correct": false,
+            "consequence": "You can't turn around on a two-lane canyon road in heavy traffic and smoke. The decision to enter is the decision to commit.",
+            "teaching_point": "Treat any constrained route as a one-way commitment. If you can't guarantee an exit, don't enter."
+          },
+          {
+            "id": "D",
+            "text": "Pull over and wait for the smoke to clear before deciding",
+            "grade": "D+",
+            "correct": false,
+            "consequence": "Smoke from a wind-driven fire doesn't clear — it intensifies. Waiting puts you closer to the fire, not further.",
+            "teaching_point": "In a moving fire, time is always working against you. Stationary is rarely a safer choice than moving away."
+          }
+        ]
+      },
+      {
+        "id": "dp_005",
+        "sequence": 5,
+        "situation": "You're on the arterial heading north, smoke thick enough that headlights are barely punching through. Ash is hitting the windshield. The radio just announced the warning has escalated to a mandatory order for your zone. You realize you didn't put on your N95 and the cabin is filling with smoke smell. The dog is panting hard. What do you do?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Set the climate control to recirculate, turn fans to max, and put on your N95",
+            "grade": "A",
+            "correct": true,
+            "consequence": "Cabin air quality stabilizes within a minute. The mask handles the rest. The dog calms slightly as the cabin cools. You keep moving.",
+            "teaching_point": "Recirculate mode is your single best tool against wildfire smoke in a vehicle. Combined with N95s for occupants, it dramatically reduces particulate exposure."
+          },
+          {
+            "id": "B",
+            "text": "Roll the windows down to clear the smoke smell",
+            "grade": "F",
+            "correct": false,
+            "consequence": "You flood the cabin with smoke and ash. Visibility worsens. The dog starts coughing. You become a hazard to yourself and other drivers.",
+            "teaching_point": "Smoke outside is always worse than smoke inside. Seal the cabin, recirculate, and use masks. Never ventilate to outside air during active smoke."
+          },
+          {
+            "id": "C",
+            "text": "Pull over, get out, mask everyone up properly, then continue",
+            "grade": "C",
+            "correct": false,
+            "consequence": "Stopping in dense smoke on a busy evacuation route risks being rear-ended. You can mask up while driving slowly in stable traffic.",
+            "teaching_point": "During active evacuation, momentum matters. Solve problems in motion when you can; stop only when stopping is genuinely safer than continuing."
+          },
+          {
+            "id": "D",
+            "text": "Speed up to get out of the smoke faster",
+            "grade": "D",
+            "correct": false,
+            "consequence": "Visibility is too low for higher speed. You nearly rear-end a slower vehicle. Smoke extends for miles — you can't outrun it on this road.",
+            "teaching_point": "Smoke is not a wall you punch through. It's a region you traverse carefully. Match speed to visibility, always."
+          }
+        ]
+      }
+    ],
+    "debrief": {
+      "title": "Scenario Debrief",
+      "core_lesson": "Wildfire evacuation is decided in the warning phase, not the order phase. The people who survive wind-driven fires are the ones who treat warnings as departure prep, choose survivable routes over fast ones, and never converge on the threat.",
+      "key_skills_tested": [
+        "Warning vs. order interpretation",
+        "Rapid prioritized packing (six P's)",
+        "Family rally-point logic under separation",
+        "Wildfire-aware route selection",
+        "Smoke management in a vehicle"
+      ],
+      "grade_thresholds": {
+        "A": { "min_score": 90, "label": "Expert Survivor", "description": "You understand that wildfire survival is about decisions made before the panic phase. Your sequencing was textbook." },
+        "B": { "min_score": 75, "label": "Capable Survivor", "description": "Solid evacuation instincts with a few avoidable losses of time or margin." },
+        "C": { "min_score": 60, "label": "Struggling Survivor", "description": "You got out, but several decisions added unnecessary risk. Re-read the route and rally-point lessons." },
+        "D": { "min_score": 0, "label": "At Risk", "description": "Critical gaps in wildfire evacuation reasoning. These mistakes get people killed in real wind-driven fires." }
+      },
+      "option_grade_weights": {
+        "A": 100,
+        "B": 80,
+        "B+": 85,
+        "B-": 72,
+        "C+": 65,
+        "C": 60,
+        "C-": 55,
+        "D+": 45,
+        "D": 30,
+        "F": 0
+      }
+    }
   }
 ];

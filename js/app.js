@@ -685,7 +685,11 @@
 
     const diffColors = { easy: 'var(--primary)', intermediate: 'var(--accent)', hard: 'var(--danger)', expert: 'var(--danger)' };
 
-    scenariosData.forEach(scenario => {
+    const diffOrder = { easy: 0, beginner: 0, intermediate: 1, hard: 2, expert: 3 };
+    const sorted = [...scenariosData].sort((a, b) =>
+      (diffOrder[a.meta.difficulty] ?? 99) - (diffOrder[b.meta.difficulty] ?? 99)
+    );
+    sorted.forEach(scenario => {
       const saved = data.scenarioGrades[scenario.id];
       const card = document.createElement('div');
       card.className = 'scenario-card';
