@@ -691,10 +691,14 @@
       card.className = 'scenario-card';
       const diffColor = diffColors[scenario.meta.difficulty] || 'var(--text-dim)';
 
+      const imgSrc = scenario.meta.image || `images/${scenario.id}.jpg`;
       card.innerHTML = `
+        <div class="scenario-card-image" style="background-image:url('${imgSrc}')">
+          <span class="scenario-difficulty-badge" style="background:${diffColor}">${scenario.meta.difficulty}</span>
+        </div>
+        <div class="scenario-card-body">
         <div class="scenario-card-header">
           <h3>${scenario.meta.title}</h3>
-          <span class="scenario-difficulty" style="color:${diffColor}">${scenario.meta.difficulty}</span>
         </div>
         <div class="scenario-card-meta">
           <span>📍 ${scenario.meta.setting}</span>
@@ -708,6 +712,7 @@
             ? `<span class="scenario-best-grade">Best: <strong>${saved.grade}</strong> (${saved.score}/100)</span>`
             : '<span class="scenario-new">NEW</span>'}
           <button class="btn btn-primary btn-sm scenario-start-btn">${saved ? 'Replay' : 'Start'}</button>
+        </div>
         </div>
       `;
 
@@ -1002,6 +1007,18 @@
     $('#btn-scenario-quit').addEventListener('click', () => { clearEffect(); renderScenarioPicker(); });
     $('#btn-scenario-debrief-back').addEventListener('click', () => renderScenarioPicker());
     $('#btn-scenario-replay').addEventListener('click', () => startScenario(scenarioState.scenario));
+    $('#btn-scenario-prev').addEventListener('click', () => {
+      const list = $('#scenario-list');
+      const card = list.querySelector('.scenario-card');
+      const step = card ? card.offsetWidth + 20 : list.clientWidth * 0.8;
+      list.scrollBy({ left: -step, behavior: 'smooth' });
+    });
+    $('#btn-scenario-next').addEventListener('click', () => {
+      const list = $('#scenario-list');
+      const card = list.querySelector('.scenario-card');
+      const step = card ? card.offsetWidth + 20 : list.clientWidth * 0.8;
+      list.scrollBy({ left: step, behavior: 'smooth' });
+    });
 
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {

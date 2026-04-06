@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2d4a3a"/>
+      <stop offset="100%" stop-color="#13201a"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#g)"/>
+  <g fill="#1a2e24" opacity="0.7">
+    <polygon points="0,450 150,250 300,450"/>
+    <polygon points="200,450 380,200 560,450"/>
+    <polygon points="450,450 620,280 800,450"/>
+  </g>
+  <text x="400" y="230" font-family="system-ui,sans-serif" font-size="28" font-weight="700" fill="#5a7a68" text-anchor="middle">SCENARIO IMAGE</text>
+  <text x="400" y="260" font-family="system-ui,sans-serif" font-size="16" fill="#3d5648" text-anchor="middle">800 × 450</text>
+</svg>
