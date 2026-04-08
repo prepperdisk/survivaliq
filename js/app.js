@@ -516,6 +516,25 @@
     $('#explanation-text').textContent = q.exp;
     $('#explanation-source').textContent = q.src ? `Source: ${q.src}` : '';
 
+    const learnBox = $('#explanation-learn-more');
+    const learnList = $('#learn-more-list');
+    learnList.innerHTML = '';
+    if (Array.isArray(q.learnMore) && q.learnMore.length > 0) {
+      q.learnMore.forEach(link => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = link.url;
+        a.textContent = link.title;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        li.appendChild(a);
+        learnList.appendChild(li);
+      });
+      learnBox.classList.remove('hidden');
+    } else {
+      learnBox.classList.add('hidden');
+    }
+
     $('#btn-next').classList.remove('hidden');
     $('#btn-next').focus();
     $('#quiz-correct-count').textContent = quizState.correctCount;

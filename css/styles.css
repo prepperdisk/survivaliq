@@ -419,6 +419,11 @@ body {
 .explanation-header.incorrect-header { color: var(--danger); }
 #explanation-text { color: var(--text-dim); line-height: 1.6; margin-bottom: 8px; }
 .explanation-source { font-size: 0.8rem; color: var(--text-muted); font-style: italic; }
+.explanation-learn-more { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+.learn-more-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 6px; }
+.learn-more-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; }
+.learn-more-list a { color: var(--primary); text-decoration: none; font-size: 0.9rem; }
+.learn-more-list a:hover { text-decoration: underline; }
 
 /* ===== RESULTS SCREEN ===== */
 .results-container {
