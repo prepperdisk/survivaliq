@@ -423,6 +423,13 @@
     badge.style.background = cat.color + '22';
     badge.style.color = cat.color;
 
+    const idLabel = $('#quiz-question-id');
+    if (typeof APP_CONFIG !== 'undefined' && APP_CONFIG.showQuestionId) {
+      idLabel.textContent = `Question #${q.id}`;
+      idLabel.classList.remove('hidden');
+    } else {
+      idLabel.classList.add('hidden');
+    }
     $('#quiz-question').textContent = q.q;
 
     // Render optional media (image or video)
