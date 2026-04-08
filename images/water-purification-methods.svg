@@ -20,10 +20,9 @@
   <path d="M270 250 Q280 265 290 255 Q300 268 310 255 Q320 265 330 250" fill="#FFCC00" stroke="none"/>
   <!-- Instructions -->
   <text x="470" y="100" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" font-weight="bold" fill="#333">Steps:</text>
-  <text x="470" y="125" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#333">1. Bring to rolling boil</text>
-  <text x="470" y="145" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#333">2. Boil for 1 minute</text>
-  <text x="470" y="165" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#333">3. At altitude &gt;6,500 ft:</text>
-  <text x="470" y="185" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#333">   boil for 3 minutes</text>
-  <text x="470" y="210" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#333">4. Let cool naturally</text>
+  <text x="470" y="125" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#333">1. Bring to a rolling boil</text>
+  <text x="470" y="145" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#333">2. Let cool naturally</text>
+  <text x="470" y="175" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" font-style="italic" fill="#555">Rolling boil = bubbles that</text>
+  <text x="470" y="190" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" font-style="italic" fill="#555">don't stop when stirred</text>
   <text x="300" y="290" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" fill="#666">Source: CDC — Making Water Safe in an Emergency</text>
 </svg>
